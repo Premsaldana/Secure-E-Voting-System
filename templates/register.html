@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="card" style="max-width:720px;">
+  <h3 class="mb-2">Register to Vote</h3>
+  <p class="text-muted mb-3">Enter your institutional voter ID to receive a one-time ballot token.</p>
+
+  <form method="post" action="{{ url_for('register') }}" style="display:flex; gap:12px; flex-wrap:wrap;">
+    <div style="flex:1; min-width:200px; display:flex; flex-direction:column;">
+      <label for="voter_id" class="form-label">Voter ID</label>
+      <input id="voter_id" name="voter_id" type="text" class="form-control" placeholder="e.g., 123456" required>
+    </div>
+
+    <div style="display:flex; align-items:end;">
+      <button type="submit" class="btn btn-primary">Get Token</button>
+    </div>
+  </form>
+
+  <div style="margin-top:12px; font-size:0.92rem;" class="text-muted">
+    Already registered? Try the same ID to see the flash warning.
+  </div>
+</div>
+{% endblock %}

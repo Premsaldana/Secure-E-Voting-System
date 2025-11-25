@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="card" style="max-width:720px;">
+  <h3 class="mb-2">Ballot Token Issued</h3>
+  <p class="text-muted mb-3">This token is single-use. Keep it private and use it to cast your vote.</p>
+
+  <div style="display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap;">
+    <div style="flex:1; min-width:180px;">
+      <div class="token-box" aria-live="polite" title="Ballot token">
+        <span id="ballotToken">{{ ballot_token }}</span>
+      </div>
+    </div>
+
+    <div style="display:flex; gap:8px; align-items:center;">
+      <button class="copy-btn" id="copyBtn" onclick="copyToken()" aria-label="Copy token">
+        <svg viewBox="0 0 16 16" fill="currentColor" style="width:14px;height:14px;margin-right:6px;">
+          <path d="M10 1H3a2 2 0 0 0-2 2v9h1V3a1 1 0 0 1 1-1h7V1z"/>
+          <path d="M13 3H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm1 11a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v9z"/>
+        </svg>
+        <span id="copyText">Copy</span>
+      </button>
+
+      <a href="{{ url_for('vote') }}" class="btn btn-primary">Cast Your Vote</a>
+    </div>
+  </div>
+
+  <script>
+    function copyToken(){
+      const token = document.getElementById('ballotToken').textContent.trim();
+      const btn = document.getElementById('copyBtn');
+      const text = document.getElementById('copyText');
+
+      if (!navigator.clipboard) {
+        // fallback
+        const t = document.createElement('textarea');
+        t.value = token;
+        document.body.appendChild(t);
+        t.select();
+        try { document.execCommand('copy'); show(); } catch(e){ alert("Copy failed"); }
+        document.body.removeChild(t);
+        return;
+      }
+
+      navigator.clipboard.writeText(token).then(show).catch(()=> alert("Copy failed"));
+
+      function show(){
+        text.textContent = "Copied!";
+        btn.style.borderColor = "#3a7c3a";
+        setTimeout(()=>{ text.textContent = "Copy"; btn.style.borderColor = "#ccc"; }, 1200);
+      }
+    }
+  </script>
+</div>
+{% endblock %}

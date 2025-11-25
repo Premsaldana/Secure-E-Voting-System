@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="card" style="max-width:760px;">
+  <h3 class="mb-2">Tally Votes</h3>
+  <p class="text-muted mb-3">Enter at least 3 Shamir shares (comma-separated), e.g. <code>1:123,2:456,3:789</code></p>
+
+  <form method="post" action="{{ url_for('tally') }}" style="display:flex; flex-direction:column; gap:12px;">
+    <div style="display:flex; gap:12px; flex-wrap:wrap;">
+      <textarea name="shares" rows="3" class="form-control" placeholder="1:123,2:456,3:789" required></textarea>
+    </div>
+
+    <div style="display:flex; gap:8px; justify-content:flex-end;">
+      <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">Back</a>
+      <button class="btn btn-primary" type="submit">Reconstruct & Tally</button>
+    </div>
+  </form>
+
+  {% if results is not none %}
+    <hr style="margin-top:16px;"/>
+    <h5>Results</h5>
+    <div style="display:flex; flex-direction:column; gap:8px; margin-top:8px;">
+      {% for k,v in results.items() %}
+        <div style="display:flex; justify-content:space-between; align-items:center; background:#fbfcfe; padding:8px 12px; border-radius:6px;">
+          <div style="font-weight:600;">{{ k }}</div>
+          <div class="text-muted">{{ v }} vote{{ 's' if v != 1 else '' }}</div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

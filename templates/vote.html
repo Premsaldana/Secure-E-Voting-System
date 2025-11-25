@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="card" style="max-width:760px;">
+  <h3 class="mb-2">Cast Your Vote</h3>
+  <p class="text-muted mb-3">Paste your ballot token and select a candidate below. Tokens are single-use.</p>
+
+  <form method="post" action="{{ url_for('vote') }}" style="display:flex; flex-direction:column; gap:16px;">
+
+    <!-- TOKEN INPUT -->
+    <div style="display:flex; flex-direction:column; gap:6px;">
+      <label class="form-label">Ballot Token</label>
+      <input 
+        name="ballot_token" 
+        type="text" 
+        class="form-control" 
+        placeholder="Paste your ballot token here"
+        required>
+    </div>
+
+    <!-- CANDIDATE SELECTION -->
+    <div style="display:flex; flex-direction:column; gap:6px;">
+      <label class="form-label">Select a Candidate</label>
+
+      <select name="choice" class="form-control" required>
+        <option value="">— Choose a Candidate —</option>
+
+        <!-- Girl Candidates -->
+        <option value="Alice">Alice</option>
+        <option value="Meera">Meera</option>
+        <option value="Riya">Riya</option>
+
+        <!-- Guy Candidates -->
+        <option value="Arjun">Arjun</option>
+        <option value="Bob">Bob</option>
+      </select>
+    </div>
+
+    <!-- BUTTONS -->
+    <div style="display:flex; justify-content:flex-end; gap:10px;">
+      <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">Cancel</a>
+      <button type="submit" class="btn btn-primary">Submit Vote</button>
+    </div>
+  </form>
+
+  <div style="margin-top:10px;" class="text-muted small">
+    Make sure your token is valid. If your token is incorrect or already used, you’ll receive an error.
+  </div>
+</div>
+{% endblock %}

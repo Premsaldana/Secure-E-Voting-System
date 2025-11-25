@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="card" style="max-width:980px;">
+  <h3 class="mb-2">Audit Log</h3>
+  <p class="text-muted mb-3">Immutable chain of encrypted votes (IV + ciphertext). Each entry shows its hash and prev-hash.</p>
+
+  {% if audit.entries %}
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      {% for e in audit.entries|reverse %}
+        <div style="display:flex; gap:12px; align-items:flex-start; flex-wrap:wrap; background:#fbfcfe; padding:12px; border-radius:8px;">
+          <div style="flex:1; min-width:220px;">
+            <div><strong>Hash</strong></div>
+            <div style="font-family:monospace; font-size:0.85rem; word-break:break-all;">{{ e.hash }}</div>
+          </div>
+
+          <div style="flex:1; min-width:220px;">
+            <div><strong>Prev</strong></div>
+            <div style="font-family:monospace; font-size:0.85rem; word-break:break-all;">{{ e.prev }}</div>
+          </div>
+
+          <div style="flex:1; min-width:200px;">
+            <div><strong>IV</strong></div>
+            <div style="font-family:monospace; font-size:0.85rem;">{{ e.payload.iv }}</div>
+            <div class="mt-2"><strong>CT</strong></div>
+            <div style="font-family:monospace; font-size:0.85rem;">{{ e.payload.ct }}</div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="text-muted">No audit entries yet.</div>
+  {% endif %}
+
+  <!-- ⭐ Back to home button -->
+  <div style="display:flex; justify-content:flex-end; margin-top:20px;">
+      <a href="{{ url_for('index') }}" class="btn btn-primary">
+          Back to Home
+      </a>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Vote Successfully Submitted</h2>
+
+<p>Your receipt hash (for public audit):</p>
+<pre>{{ receipt }}</pre>
+
+<a class="link" href="/audit"><button>View Audit Log</button></a>
+{% endblock %}
